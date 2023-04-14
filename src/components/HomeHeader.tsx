@@ -20,9 +20,9 @@ export function HomeHeader() {
           Olá,
         </Text>
 
-        <Heading fontSize="md" color="gray.100">
+        <Text fontSize="md" color="gray.100" fontFamily="heading">
           Eduardo Farah
-        </Heading>
+        </Text>
       </VStack>
 
       <TouchableOpacity>
