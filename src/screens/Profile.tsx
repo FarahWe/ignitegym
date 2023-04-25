@@ -24,9 +24,9 @@ export function Profile() {
       <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS == "ios" ? "padding" : undefined}
-        keyboardVerticalOffset={50}
+        keyboardVerticalOffset={10}
       >
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ paddingBottom: 56 }}>
           <Center mt={6} px={10}>
             {photoIsLoading ? (
               <Skeleton
