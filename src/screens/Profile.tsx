@@ -1,7 +1,17 @@
+import { Button } from "@components/Button";
+import { Input } from "@components/Input";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { UserPhoto } from "@components/UserPhoto";
-import { Center, ScrollView, VStack, Skeleton } from "native-base";
+import {
+  Center,
+  ScrollView,
+  VStack,
+  Skeleton,
+  Text,
+  KeyboardAvoidingView,
+} from "native-base";
 import { useState } from "react";
+import { Platform, TouchableOpacity } from "react-native";
 
 const PHOTO_SIZE = 33;
 
@@ -11,26 +21,65 @@ export function Profile() {
   return (
     <VStack flex={1}>
       <ScreenHeader title="Perfil" />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS == "ios" ? "padding" : undefined}
+        keyboardVerticalOffset={50}
+      >
+        <ScrollView>
+          <Center mt={6} px={10}>
+            {photoIsLoading ? (
+              <Skeleton
+                h={PHOTO_SIZE}
+                w={PHOTO_SIZE}
+                rounded="full"
+                startColor="gray.500"
+                endColor="gray.400"
+              />
+            ) : (
+              <UserPhoto
+                source={{ uri: "https://github.com/FarahWe.png" }}
+                alt="foto do usuário"
+                size={PHOTO_SIZE}
+              />
+            )}
 
-      <ScrollView>
-        <Center mt={6} px={10}>
-          {photoIsLoading ? (
-            <Skeleton
-              h={PHOTO_SIZE}
-              w={PHOTO_SIZE}
-              rounded="full"
-              startColor="gray.500"
-              endColor="gray.400"
+            <TouchableOpacity>
+              <Text
+                color="green.500"
+                fontFamily="heading"
+                fontSize="md"
+                mt={2}
+                mb={8}
+              >
+                Alterar foto
+              </Text>
+            </TouchableOpacity>
+
+            <Input bg="gray.600" placeholder="Nome" />
+
+            <Input bg="gray.600" placeholder="E-mail" isDisabled />
+          </Center>
+
+          <VStack px={10} mt={12} mb={9}>
+            <Text fontFamily="heading" color="gray.200" fontSize="md" mb={2}>
+              Alterar senha
+            </Text>
+
+            <Input bg="gray.600" placeholder="Senha antiga" secureTextEntry />
+
+            <Input bg="gray.600" placeholder="Nova senha" secureTextEntry />
+
+            <Input
+              bg="gray.600"
+              placeholder="Confirme nova senha"
+              secureTextEntry
             />
-          ) : (
-            <UserPhoto
-              source={{ uri: "https://github.com/FarahWe.png" }}
-              alt="foto do usuário"
-              size={PHOTO_SIZE}
-            />
-          )}
-        </Center>
-      </ScrollView>
+
+            <Button title="Atualizar" mt={4} />
+          </VStack>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </VStack>
   );
 }
