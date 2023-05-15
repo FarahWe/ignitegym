@@ -6,6 +6,7 @@ import {
   Heading,
   ScrollView,
   KeyboardAvoidingView,
+  useToast,
 } from "native-base";
 
 import LogoSvg from "@assets/logo.svg";
@@ -18,6 +19,9 @@ import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAuth } from "@hooks/useAuth";
+import { AppError } from "@utils/AppError";
+import { useState } from "react";
 
 type FormDataProps = {
   email: string;
@@ -33,6 +37,9 @@ const signInSchema = yup.object({
 });
 
 export function SignIn() {
+  const { singIn } = useAuth();
+  const toast = useToast();
+
   const {
     control,
     handleSubmit,
@@ -43,7 +50,26 @@ export function SignIn() {
 
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-  function onSubmit({ email, password }: FormDataProps) {}
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function onSubmit({ email, password }: FormDataProps) {
+    try {
+      setIsLoading(true);
+      await singIn(email, password);
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError
+        ? error.message
+        : "Não foi possível acessar. Tente novamente mais tarde.";
+
+      toast.show({
+        title,
+        placement: "top",
+        bgColor: "error.500",
+      });
+      setIsLoading(false);
+    }
+  }
 
   function handleSignUp() {
     navigation.navigate("signUp");
@@ -106,7 +132,11 @@ export function SignIn() {
               )}
             />
 
-            <Button title="Acessar" onPress={handleSubmit(onSubmit)} />
+            <Button
+              title="Acessar"
+              isLoading={isLoading}
+              onPress={handleSubmit(onSubmit)}
+            />
           </Center>
 
           <Center mt={24} pb={10}>

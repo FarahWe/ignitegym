@@ -1,10 +1,14 @@
 import { HStack, Icon, Image, Text, VStack } from "native-base";
 import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { ExerciseDTO } from "@dtos/ExerciseDTO";
+import { api } from "@services/api";
 
-type Props = TouchableOpacityProps & {};
+type Props = TouchableOpacityProps & {
+  data: ExerciseDTO;
+};
 
-export function ExerciseCard({ ...rest }: Props) {
+export function ExerciseCard({ data, ...rest }: Props) {
   return (
     <TouchableOpacity {...rest}>
       <HStack
@@ -17,7 +21,7 @@ export function ExerciseCard({ ...rest }: Props) {
       >
         <Image
           source={{
-            uri: "https://i.ytimg.com/vi/zM4pTzmVH9Q/maxresdefault.jpg",
+            uri: `${api.defaults.baseURL}/exercise/thumb/${data.thumb}`,
           }}
           alt="Imagem do exercício"
           w={16}
@@ -29,11 +33,11 @@ export function ExerciseCard({ ...rest }: Props) {
 
         <VStack flex={1}>
           <Text fontSize="lg" color="white" fontFamily="heading">
-            Deadlift
+            {data.name}
           </Text>
 
           <Text fontSize="sm" color="gray.200" mt={1} numberOfLines={2}>
-            Até a falha
+            {data.series} séries x {data.repetitions} repetições
           </Text>
         </VStack>
 
