@@ -1,6 +1,11 @@
+import { HistoryDTO } from "@dtos/HistoryDTO";
 import { HStack, Text, VStack } from "native-base";
 
-export function HistoryCard() {
+type Props = {
+  data: HistoryDTO;
+};
+
+export function HistoryCard({ data }: Props) {
   return (
     <HStack
       w="full"
@@ -20,15 +25,15 @@ export function HistoryCard() {
           fontFamily="heading"
           numberOfLines={1}
         >
-          Costas
+          {data.group}
         </Text>
         <Text color="gray.100" fontSize="lg" numberOfLines={1}>
-          Puxada Frontal
+          {data.name}
         </Text>
       </VStack>
 
       <Text color="gray.300" fontSize="md">
-        08:29
+        {data.hour}
       </Text>
     </HStack>
   );
