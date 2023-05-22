@@ -7,6 +7,7 @@ import defaulUserPhotoImg from "@assets/userPhotoDefault.png";
 import { UserPhoto } from "./UserPhoto";
 import { TouchableOpacity } from "react-native";
 import { useAuth } from "@hooks/useAuth";
+import { api } from "@services/api";
 
 export function HomeHeader() {
   const { user, signOut } = useAuth();
@@ -17,7 +18,11 @@ export function HomeHeader() {
         alt="Imagem do usário"
         mr={4}
         size={16}
-        source={user.avatar ? { uri: user.avatar } : defaulUserPhotoImg}
+        source={
+          user.avatar
+            ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` }
+            : defaulUserPhotoImg
+        }
       />
 
       <VStack flex={1}>
