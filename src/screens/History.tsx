@@ -1,4 +1,5 @@
 import { HistoryCard } from "@components/HistoryCard";
+import { Loading } from "@components/Loading";
 import { ScreenHeader } from "@components/ScreenHeader";
 import { HistoryByDayDTO } from "@dtos/HistoryByDayDTO";
 import { useFocusEffect } from "@react-navigation/native";
@@ -45,33 +46,37 @@ export function History() {
     <VStack flex={1}>
       <ScreenHeader title="Histórico de Exercícios" />
 
-      <SectionList
-        sections={exercises}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <HistoryCard data={item} />}
-        stickySectionHeadersEnabled={false}
-        renderSectionHeader={({ section }) => (
-          <Text
-            fontFamily="heading"
-            color="gray.200"
-            fontSize="md"
-            mt={10}
-            mb={3}
-          >
-            {section.title}
-          </Text>
-        )}
-        px={8}
-        contentContainerStyle={
-          exercises.length === 0 && { flex: 1, justifyContent: "center" }
-        }
-        ListEmptyComponent={() => (
-          <Text color="gray.100" textAlign="center">
-            Não há exercícios registrados ainda.{"\n"}Vamos fazer exercício
-            hoje?
-          </Text>
-        )}
-      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <SectionList
+          sections={exercises}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <HistoryCard data={item} />}
+          stickySectionHeadersEnabled={false}
+          renderSectionHeader={({ section }) => (
+            <Text
+              fontFamily="heading"
+              color="gray.200"
+              fontSize="md"
+              mt={10}
+              mb={3}
+            >
+              {section.title}
+            </Text>
+          )}
+          px={8}
+          contentContainerStyle={
+            exercises.length === 0 && { flex: 1, justifyContent: "center" }
+          }
+          ListEmptyComponent={() => (
+            <Text color="gray.100" textAlign="center">
+              Não há exercícios registrados ainda.{"\n"}Vamos fazer exercício
+              hoje?
+            </Text>
+          )}
+        />
+      )}
     </VStack>
   );
 }
