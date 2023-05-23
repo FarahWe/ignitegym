@@ -34,6 +34,9 @@ This is a mobile application developed in React Native with Expo, which allows u
 ```console
   cd ignitegym/mobile
   npm install
+  cd ..
+  cd api
+  npm install
 ```
 
 ## Usage
