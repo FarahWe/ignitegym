@@ -32,7 +32,7 @@ This is a mobile application developed in React Native with Expo, which allows u
 2. Install dependencies:
 
 ```console
-  cd ignitegym/
+  cd ignitegym/mobile
   npm install
 ```
 
@@ -49,3 +49,16 @@ This is a mobile application developed in React Native with Expo, which allows u
 3. Open the Expo Go app and scan the QR code from the Expo development server.
 
 4. The app will be launched on your device.
+
+## API Usage
+
+| Script            | Target                                 |
+| ----------------- | -------------------------------------- |
+| `npm run dev`     | Run API in **development** environment |
+| `npm start`       | Run API in **production** environment  |
+| `npm run migrate` | Create database tables                 |
+| `npm run seed`    | Populate database tables               |
+
+## API Docs
+
+To view the API documentation, run the API and access [http://localhost:3333/api-docs](http://localhost:3333/api-docs) in your browser
